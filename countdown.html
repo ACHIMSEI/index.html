@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Push-Up Meisterschaft Countdown</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #1a1a1a;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            position: relative;
+            max-width: 600px;
+            width: 100%;
+        }
+
+        /* Das Hintergrundbild */
+        .bg-image {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 8px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+        }
+
+        /* Der Countdown-Overlay-Kasten */
+        .countdown-overlay {
+            position: absolute;
+            top: 12%; /* Platziert den Kasten im oberen Bereich */
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(20, 20, 20, 0.9);
+            border: 3px solid #b8860b;
+            border-radius: 12px;
+            padding: 10px 20px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.7);
+            width: 75%;
+            box-sizing: border-box;
+        }
+
+        .title {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #d4af37;
+            margin: 0 0 2px 0;
+        }
+
+        .target-date {
+            font-size: 12px;
+            color: #ffffff;
+            margin: 0 0 8px 0;
+            font-weight: bold;
+        }
+
+        /* Die digitale Zeitanzeige */
+        .timer {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 28px;
+            font-weight: bold;
+            color: #ff9900;
+            text-shadow: 0 0 10px rgba(255, 153, 0, 0.7);
+            letter-spacing: 2px;
+        }
+
+        .labels {
+            display: flex;
+            justify-content: space-between;
+            padding: 0 10px;
+            margin-top: 2px;
+            font-size: 9px;
+            color: #aaa;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <img class="bg-image" src="pushup.png" alt="Push-Up Meisterschaft">
+    
+    <div class="countdown-overlay">
+        <div class="title">Countdown zum Ziel</div>
+        <div class="target-date">Freitag, den 26.06. 19:15 Uhr</div>
+        <div class="timer" id="clock">00:00:00:00</div>
+        <div class="labels">
+            <span>Tage</span>
+            <span>Std</span>
+            <span>Min</span>
+            <span>Sek</span>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Zieldatum setzen: 26. Juni 2026 um 19:15:00 Uhr
+    const targetDate = new Date("June 26, 2026 19:15:00").getTime();
+
+    function updateCountdown() {
+        const now = new Date().getTime();
+        const difference = targetDate - now;
+
+        if (difference < 0) {
+            document.getElementById("clock").innerHTML = "00:00:00:00";
+            document.getElementById("clock").style.color = "#ff0000";
+            clearInterval(intervalId);
+            return;
+        }
+
+        // Zeitberechnungen für Tage, Stunden, Minuten und Sekunden
+        const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+        // Zahlen mit führenden Nullen formatieren
+        const formatImg = (num) => String(num).padStart(2, '0');
+
+        // Anzeige aktualisieren
+        document.getElementById("clock").innerHTML = 
+            `${formatImg(days)}:${formatImg(hours)}:${formatImg(minutes)}:${formatImg(seconds)}`;
+    }
+
+    // Jede Sekunde aktualisieren
+    const intervalId = setInterval(updateCountdown, 1000);
+    
+    // Sofort beim Laden einmal ausführen
+    updateCountdown();
+</script>
+
+</body>
+</html>
+
+
+
+
+Von meinem Mobiltelefon gesendet
+
